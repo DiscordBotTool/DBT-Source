@@ -1,0 +1,74 @@
+{
+	"name": "discord-bot-tool-v2",
+	"version": "1.0.0",
+	"description": "Create discords bots with no programming knowledge using a flow-chart style editor!",
+	"main": "index.js",
+	"productName": "Discord Bot Tool V2",
+	"homepage": "https://www.discordbottool.xyz",
+	"scripts": {
+		"start": "electron index.js",
+		"dist": "electron-builder",
+		"build:windows": "electron-builder --windows",
+		"build:linux": "electron-builder --linux",
+		"build:all": "electron-builder --windows --linux --macos",
+		"build:macos": "electron-builder --macos"
+	},
+	"author": "koki1019#1019, Miro#5410<lukaodzelashvili@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+		"@discordjs/rest": "^0.3.0",
+		"child_process": "^1.0.2",
+		"discord-api-types": "^0.29.0",
+		"discord-rpc": "^4.0.1",
+		"electron-is-dev": "^2.0.0",
+		"fs-extra": "^10.0.1",
+		"path": "^0.12.7"
+	},
+	"devDependencies": {
+		"@electron-forge/cli": "^6.0.0-beta.63",
+		"electron": "^15.5.2",
+		"electron-builder": "^22.14.13",
+		"electron-packager": "^15.5.1"
+	},
+	"build": {
+		"productName": "Discord Bot Tool v2",
+		"appId": "DiscordBotTool",
+		"mac": {
+			"category": "public.app-category-developer-tools",
+			"type": "distribution"
+		},
+		"directories": {
+			"buildResources": "build"
+		},
+		"win": {
+			"asar": true,
+			"target": "nsis",
+			"icon": "build/512x512.png"
+		},
+		"linux": {
+			"asar": true,
+			"executableName": "Discord Bot Tool V2",
+			"icon": "build/icon_256.png",
+			"target": [
+				"deb"
+			],
+			"category": "Utility"
+		},
+		"nsis": {
+			"installerIcon": "build/512x512.png",
+			"installerHeaderIcon": "build/512x512.png",
+			"deleteAppDataOnUninstall": true
+		},
+		"files": [
+			"!**/_WEBSITE_",
+			"!**/Mods",
+			"!**/ProductionBuild",
+			"!**/node_modules",
+			"node_modules/**/*",
+			"build/**/*",
+			"build/icon_256.png",
+			"index.js"
+		],
+		"extends": null
+	}
+}

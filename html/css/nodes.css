@@ -1,0 +1,614 @@
+@font-face {
+    font-family: "Helvectia";
+    src: url(./Helvectia.otf);
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: url(../images/bg_grid.png);
+    background-size: 290px 290px;
+}
+svg {
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    left: 0px;
+    width: 999%;
+    height: 999%;
+    overflow-x: auto;
+
+    pointer-events: none;
+}
+
+/*---------------------------------------*/
+.NodeContainer {
+    position: absolute;
+    background-color: #111422b4;
+    /* display: inline-block; */
+    border-radius: 9px;
+    box-shadow: 0px 5px 10px #000000;
+    border: 2px solid transparent;
+    text-align: left;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+.NodeContainer > header {
+    display: block;
+    color: white;
+    cursor: pointer;
+    border-radius: 9px 9px 0px 0px;
+    padding: 10px 60px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.NodeContainer h4 {
+    position: relative;
+    word-break: break-all;
+    margin-left: 15px;
+}
+
+.message {
+    background-image: linear-gradient(35deg, rgb(16, 58, 122), rgb(0, 132, 255));
+}
+
+.variables {
+    background-image: linear-gradient(35deg, rgb(101, 16, 122), rgb(234, 0, 255));
+}
+
+.user-data {
+    background-image: linear-gradient(35deg, rgb(117, 0, 0), rgb(255, 102, 0));
+}
+
+.music {
+    background-image: linear-gradient(35deg, rgb(72, 116, 2), rgb(179, 255, 0));
+}
+
+.user-action {
+    background-image: linear-gradient(35deg, rgb(234, 0, 255), rgb(0, 17, 255));
+}
+
+.bot-action {
+    background-image: linear-gradient(35deg, rgb(61, 61, 61), rgb(41, 41, 41));
+}
+
+.server-action {
+    background-image: linear-gradient(55deg, rgb(74, 62, 143), rgb(119, 104, 255));
+}
+
+.channel {
+    background-image: linear-gradient(55deg, rgb(143, 142, 62), rgb(255, 240, 104));
+}
+
+.threads {
+    background-image: linear-gradient(55deg, rgb(143, 111, 62), rgb(255, 177, 104));
+}
+
+.reactions {
+    background-color: green;
+}
+
+.message-rows {
+    background-color: rgb(255, 41, 41);
+}
+
+.control {
+    background-image: linear-gradient(55deg, rgb(32, 32, 32), rgb(46, 63, 75));
+}
+
+.function {
+    background-image: linear-gradient(55deg, rgb(0, 110, 255), rgb(9, 255, 0));
+}
+
+.api-request {
+    background-color: rgb(255, 115, 0);
+}
+
+.mods {
+    background-color: rgb(153, 0, 255);
+}
+
+.event {
+    background-color: rgb(255, 100, 61);
+}
+
+.command {
+    background-color: rgb(109, 111, 255);
+}
+
+.slash {
+    background-image: linear-gradient(55deg, rgb(255, 71, 71), rgb(0, 255, 76));
+}
+
+.console {
+    background: linear-gradient(55deg, rgb(88, 83, 0), rgb(218, 185, 0));
+}
+
+.asynchronous {
+    background-image: linear-gradient(55deg, rgb(0, 119, 255), rgb(255, 41, 41));
+}
+
+.array {
+    background-image: linear-gradient(55deg, rgb(255, 30, 0), rgb(187, 41, 255));
+}
+
+.NodeContainer > ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+.NodeContainer > ul > li {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.NodeContainer > ul > li > span {
+    padding-left: 1em;
+    padding-right: 1em;
+    color: white;
+}
+
+.NodeContainer > ul > li > i {
+    position: absolute;
+    width: 0.6em;
+    height: 0.6em;
+    background-color: gray;
+    border: 1px solid transparent;
+    border-radius: 1em;
+    cursor: pointer;
+}
+.NodeContainer > ul > li > i:hover {
+    background-color: rgb(255, 115, 115);
+}
+
+.NodeContainer > ul > li.Input > i {
+    left: -0.3em;
+    top: 0.4em;
+}
+.NodeContainer > ul > li.Output {
+    text-align: right;
+}
+.NodeContainer > ul > li.Output > i {
+    right: -0.25em;
+    top: 0.4em;
+}
+.NodeContainer > ul > li.Active > i {
+    background-color: #96ff65;
+    border: 1px solid #ffffff;
+}
+
+.right-menu {
+    position: absolute;
+    width: 250px;
+    min-height: 350px;
+
+    background-color: #273054;
+    color: white;
+
+    z-index: 9999;
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+    border-radius: 5px;
+    box-shadow: 9px 9px 15px rgba(0, 0, 0, 0.5);
+}
+
+.right-menu *[header] {
+    width: 112%;
+    margin-left: -15px;
+    margin-top: -20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    align-items: center;
+    display: flex;
+    height: 75px;
+    background-color: #2c3761;
+
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+*[menu-btn] {
+    transition: ease-in-out 150ms;
+
+    padding: 15px;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+*[menu-btn]:hover {
+    background-color: #344070;
+}
+
+.cover {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    z-index: 10000;
+
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+}
+
+.raw-data {
+    position: fixed;
+    z-index: 9999;
+
+    min-height: 500px;
+    width: 320px;
+
+    padding-left: 25px;
+    padding-right: 25px;
+
+    background-color: rgb(61, 61, 151);
+    box-shadow: 0px 5px 10px #00000086;
+
+    top: 45px;
+    right: 25px;
+
+    border-radius: 5px;
+}
+
+.responses {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    overflow: auto;
+    z-index: 999999;
+    padding-bottom: -50px;
+}
+
+.response-box {
+    pointer-events: all;
+    position: absolute;
+    width: 550px;
+    min-height: 250px;
+
+    border-radius: 4px;
+
+    background-color: rgb(51, 52, 99);
+    z-index: 5000000;
+
+    text-align: left;
+
+    padding-left: 25px;
+    padding-right: 25px;
+
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 50px;
+
+    animation-name: responsesIn;
+    animation-duration: 0.5s;
+}
+
+.response-box hr {
+    width: 108.7%;
+    margin-left: -25px;
+
+    margin-bottom: 35px;
+    margin-top: 55px;
+}
+
+.response-box input,
+.response-box select,
+.response-box textarea,
+.response-box label,
+*[label-field],
+*[input-field2] {
+    display: block;
+}
+
+.response-box label,
+*[label-field] {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+*[input-field2],
+.response-box input,
+.response-box select,
+.response-box textarea {
+    width: 100%;
+    background-color: transparent;
+
+    border: 2px solid white;
+    font-size: 20px;
+    color: white;
+    outline: none;
+
+    padding: 5px 10px 5px 10px;
+
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.response-box input:focus,
+.response-box textarea:focus {
+    box-shadow: 0px 0px 5px rgb(141, 162, 255);
+    border-color: rgb(141, 162, 255);
+}
+
+.response-box textarea {
+    resize: vertical;
+}
+
+option {
+    background-color: #8692ff;
+}
+
+.button-holder {
+    float: right;
+
+    margin-bottom: 28px;
+}
+
+.button-holder button {
+    padding: 10px 20px 10px 20px;
+    font-size: 20px;
+    margin-right: 5px;
+
+    border-radius: 5px;
+
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    background-color: #8692ff;
+    color: white;
+
+    transition: ease-in-out 150ms;
+}
+
+.button-holder button:hover {
+    background-color: #a7b0ff;
+}
+
+.side-more {
+    float: left;
+    margin-left: 5px;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: ease-in-out 150ms;
+}
+
+.side-more:hover {
+    opacity: 1;
+}
+
+.side-panel {
+    position: fixed;
+    width: 250px;
+    height: 100%;
+
+    z-index: 1;
+    background-color: #222c49;
+
+    animation-name: sideOpen;
+    animation-duration: 0.5s;
+}
+
+*[var-btn] {
+    padding: 15px 25px 15px 25px;
+
+    margin-bottom: 30px;
+    margin-top: -10px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    color: white;
+    background-color: rgb(125, 125, 255);
+
+    transition: ease-in-out 150ms;
+}
+
+*[var-btn]:hover {
+    background-color: rgb(180, 180, 255);
+}
+
+*[btn] {
+    padding: 15px 25px 15px 25px;
+
+    margin-bottom: 30px;
+    margin-top: -10px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    color: white;
+    background-color: rgb(60, 167, 255);
+
+    transition: ease-in-out 150ms;
+}
+
+*[btn]:hover {
+    background-color: rgb(162, 199, 255);
+}
+
+*[btn-danger] {
+    padding: 15px 25px 15px 25px;
+
+    margin-bottom: 30px;
+    margin-top: -10px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    color: white;
+    background-color: rgb(255, 53, 53);
+
+    transition: ease-in-out 150ms;
+}
+
+*[btn-danger]:hover {
+    background-color: rgb(255, 140, 140);
+}
+
+*[btn-success] {
+    padding: 15px 25px 15px 25px;
+
+    margin-bottom: 30px;
+    margin-top: -10px;
+
+    border: none;
+    outline: none;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    color: white;
+    background-color: rgb(99, 218, 69);
+
+    transition: ease-in-out 150ms;
+}
+
+*[btn-success]:hover {
+    background-color: rgb(176, 255, 140);
+}
+
+.var-box {
+    width: 400px;
+    position: absolute;
+    border: 1px solid black;
+    box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.712), 0px 0px 120px rgba(0, 0, 0, 0.712), 0px 0px 140px rgba(0, 0, 0, 0.712),
+        0px 0px 160px rgba(0, 0, 0, 0.712), 0px 0px 180px rgba(0, 0, 0, 0.712);
+    z-index: 999999999;
+    transition: margin-top ease-in-out 2s;
+}
+
+.var-box hr {
+    width: 112%;
+}
+
+.variable-container {
+    background-color: rgb(41, 41, 78);
+
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.5);
+    border-left: 5px solid rgb(117, 119, 255);
+
+    padding: 5px 15px 5px 15px;
+    border-radius: 5px;
+
+    margin-bottom: 25px;
+}
+
+*[var-btn-2] {
+    padding: 15px 25px 15px 25px;
+
+    border: none;
+    outline: none;
+    margin-bottom: 5px;
+    margin-top: 15px;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+
+    color: white;
+    background-color: rgb(125, 125, 255);
+
+    transition: ease-in-out 150ms;
+}
+
+*[var-btn-2]:hover {
+    background-color: rgb(180, 180, 255);
+}
+
+@keyframes responsesIn {
+    from {
+        margin-top: -1500px;
+        opacity: 0;
+    }
+
+    to {
+        margin-top: 50px;
+        opacity: 1;
+    }
+}
+
+@keyframes responsesOut {
+    from {
+        margin-top: 50px;
+        opacity: 1;
+    }
+
+    to {
+        margin-top: -1500px;
+        opacity: 0;
+    }
+}
+
+@keyframes sideOpen {
+    from {
+        margin-left: -500px;
+        opacity: 0;
+    }
+    to {
+        margin-left: 0px;
+        opacity: 1;
+    }
+}
+
+@keyframes sideClose {
+    from {
+        margin-left: 0px;
+        opacity: 1;
+    }
+    to {
+        margin-left: -500px;
+        opacity: 0;
+    }
+}
+
+.type-input {
+    width: 200px;
+    background-color: transparent;
+
+    border: 2px solid white;
+    font-size: 20px;
+    color: white;
+    outline: none;
+
+    padding: 5px 10px 5px 10px;
+
+    border-radius: 5px;
+
+    margin: 15px 15px 15px 15px;
+    resize: vertical;
+}

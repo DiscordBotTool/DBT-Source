@@ -1,0 +1,484 @@
+<html>
+    <head>
+
+        <link rel="stylesheet" type="text/css" href="./css/nodes.css" />
+        <link rel="stylesheet" type="text/css" href="./css/style.css" /> 
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+
+        <script src="./js/NodeSaving.js" defer></script>
+        <script src="./js/commands.js" defer></script>
+
+        <script src="./js/NodeSys.js" defer></script>
+        <script src="./js/dropdown.js" ></script>
+        <script src="./js/file.js" defer></script>
+
+        <script src="./js/Errors.js" defer></script>
+
+        <script src="./js/rpc.js"></script>
+        <script src="./js/pluginManager.js" defer></script>
+        <script src="./js/titleBar.js" defer></script>
+    </head>
+    <body style="overflow-x: auto; user-select: none;">  
+        <div class="title-bar">
+            <div class="titleDrag"></div>
+            <p style="margin-left: 15px">DBT v2.0.2</p>
+            <div>
+                <a minimize><i class="fa-solid fa-dash"></i>&nbsp;</a>
+                <a maximize><i class="fa-solid fa-window-maximize"></i>&nbsp;</a>
+                <a close><i class="fa-solid fa-xmark"></i>&nbsp;</a>
+            </div>
+        </div>
+        <div class="error-container">
+        </div>
+
+        <template id="errorMsg">
+            <div class="error">
+                <p class="error-text"></p>
+            </div>
+        </template>
+
+        <template id="toastMsg">
+            <div class="toast">
+                <p class="toast-text"></p>
+            </div>
+        </template>
+
+        <template id="groupTemplate">
+            <div id="group_name" onmousedown="groupMoveDown(event)" class="group">
+                <h1 class="group-name">GROUP_NAME</h1>
+                <h1 onclick="openGroupMenu(event)" class="group-menu" style="position: absolute; right: 15px; top: 0;"><i class="fa-solid fa-circle-caret-down"></i>&nbsp;</h1>
+                <div class="group-resizer" onmousedown="groupDown(event)" onmousemove="groupResize(event)">
+                    <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                </div>
+            </div>
+        </template>
+        
+
+        <center class="responses" id="responses">
+            <div style="display: none;" class="cover"></div>
+            <div style="display: none;" class="response-box" id="new-response">
+                <form id="responseForm">
+                    <h1><i class="fa fa-commenting" aria-hidden="true"></i> Create a New Response</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="responseName">Response Name</label>
+                    <input name="responseName"></input>
+
+                    <label for="responseCategory">Response Category</label>
+                    <select input-field2 id="category" onchange="changeTypes(this)" name="responseCategory">
+                    </select>
+
+                    <label for="responseType">Response Type</label>
+                    <select id="types" input-field2 name="responseType">
+                    </select>
+
+                    <hr />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeRep()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box var-box" id="insert-variables">
+                <form id="insert-variable-form">
+                    <h1><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</h1>
+                    <hr style="margin-top: 10px;" />
+
+
+                    <div style="width: 102%; padding-right: 15px; height: 450px; overflow-y: auto;">
+                        <div>
+                            <h2><i class="fa-solid fa-user"></i> Author Variables</h2>
+                            <div class="variable-container">
+                                <h2>${dbt.author.username}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command authors username</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.author.id}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command authors id</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2><@${dbt.author.id}></h2>
+                                <h3 style="margin-top: -10px;">Mentions the author</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.author.tag}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command authors id</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.author.avatarURL}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command authors avatar url</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.author.displayAvatar}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command authors avatar dispaly (USE IN CANVAS)</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2><i class="fa-solid fa-hashtag"></i> Channel Variables</h2>
+                            <div class="variable-container">
+                                <h2>${dbt.commandChannel.name}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command channels name</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.commandChannel.id}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command channels id</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.commandChannel.name}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command channels name</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.commandChannel.pos}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command channels position</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.commandChannel.type}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command channels type</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2><i class="fa-solid fa-server"></i> Guild Variables</h2>
+                            <div class="variable-container">
+                                <h2>${dbt.guild.name}</h2>
+                                <h3 style="margin-top: -10px;">Gets the guilds name</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.guild.id}</h2>
+                                <h3 style="margin-top: -10px;">Gets the guilds id</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.guild.icon}</h2>
+                                <h3 style="margin-top: -10px;">Gets the guilds icon</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.guild.members}</h2>
+                                <h3 style="margin-top: -10px;">Gets the guilds current members (including bots)</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2><i class="fa-solid fa-comment-dots"></i> Message Variables</h2>
+                            <div class="variable-container">
+                                <h2>${dbt.commandMessage.content}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command messages content</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                            <div class="variable-container">
+                                <h2>${dbt.commandMessage.id}</h2>
+                                <h3 style="margin-top: -10px;">Gets the command messages id</h3>
+                                <button onclick="insertVar(this)" type="button" var-btn-2><i class="fa-solid fa-flask-round-potion"></i> Insert Variable</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeVars()">Close</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="new-command">
+                <form id="newCommandForm">
+                    <h1><i class="fa-solid fa-command"></i> New Command</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="commandName">Command Name</label>
+                    <input style="text-transform: lowercase;" name="commandName"></input>
+
+                    <label for="commandName">Command Aliases (split by comma)</label>
+                    <input style="text-transform: lowercase;" name="commandAliases"></input>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeNewCmd()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="new-slash">
+                <form id="newSlashForm">
+                    <h1><i class="fa-solid fa-slash-forward"></i> New Slash Command</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="commandName">Command Name</label>
+                    <input style="text-transform: lowercase;" name="commandName"></input>
+
+                    <label for="commandName">Command Description</label>
+                    <input name="desc"></input>
+
+                    <label for="commandName">Arguments needed (seperate them by a comma)</label>
+                    <input style="text-transform: lowercase;" name="args"></input>
+
+                    <label for="commandName">Argument Types (ROLE, CHANNEL, TEXT, NUMBER, USER) seperate them by a comma</label>
+                    <input style="text-transform: uppercase;" name="types"></input>
+
+                    <label for="commandName">Guild ID to add the command in (type global to add it as a global command)</label>
+                    <input name="guild"></input>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeSlashCommands()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="new-event">
+                <form id="newEventForm">
+                    <h1><i class="fa-solid fa-flag-pennant"></i> New Event</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="commandName">Node Name</label>
+                    <input name="name"></input>
+
+                    <label for="responseType">Event</label>
+                    <select id="event-types" input-field2 name="responseType">
+                    </select>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeEvent()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="new-group">
+                <form id="newGroupForm">
+                    <h1><i class="fa-solid fa-layer-group"></i> New Group</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label>Group Name</label>
+                    <input name="name"></input>
+
+                    <label for="responseType">Group Color</label>
+                    <input style="padding: 0" type="color" name="color"></input>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeGroup()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="new-note">
+                <form id="newNoteForm">
+                    <h1><i class="fa-solid fa-note"></i> New Note</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label>Note Name</label>
+                    <input name="name"></input>
+
+                    <label for="responseType">Note Color</label>
+                    <input style="padding: 0" type="color" name="color"></input>
+
+                    <label>Note Description</label>
+                    <textarea name="description"></textarea>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeNote()">Close</button>
+                        <button type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="edit-node">
+                <form id="editNodeForm">
+                    <h1><i class="fa-solid fa-pen-to-square"></i> Edit Node</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label>Node Name</label>
+                    <input name="name"></input>
+
+                    <h3 style="color: rgb(255, 74, 74)">
+                        CHANGING NODES NAME REMOVES CONNECTIONS!
+                    </h3>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeEdit(false)">Close</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="edit-group">
+                <form id="editGroupForm">
+                    <h1><i class="fa-solid fa-layer-group"></i> Edit Group</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label>Group Name</label>
+                    <input name="name"></input>
+
+                    <label for="responseType">Group Color</label>
+                    <input style="padding: 0" type="color" name="color"></input>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeEdit(true)">Close</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="Command Response">
+                <form id="Command Form">
+                    <h1><i class="fa-solid fa-command"></i> Edit Command</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="commandName">Command Name</label>
+                    <input style="text-transform: lowercase;" name="commandName"></input>
+
+                    <label for="commandName">Command Aliases (split by comma)</label>
+                    <input style="text-transform: lowercase;" name="commandAliases"></input>
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeResponse('Command Response')">Close</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="display: none;" class="response-box" id="Slash Response">
+                <form id="Slash Form">
+                    <h1><i class="fa-solid fa-slash-forward"></i> New Slash Command</h1>
+                    <hr style="margin-top: 10px;" />
+                    <label for="commandName">Command Name</label>
+                    <input style="text-transform: lowercase;" name="commandName"></input>
+
+                    <label for="commandName">Command Description</label>
+                    <input name="desc"></input>
+
+                    <label for="commandName">Arguments needed (seperate them by a comma)</label>
+                    <input style="text-transform: lowercase;" name="args"></input>
+
+                    <label for="commandName">Argument Types (ROLE, CHANNEL, TEXT, NUMBER, USER) seperate them by a comma</label>
+                    <input style="text-transform: uppercase;" name="types"></input>
+
+                    <label for="commandName">Guild ID to add the command in (type global to add it as a global command)</label>
+                    <input style="text-transform: uppercase;" name="guild"></input>
+                    
+
+                    <hr style="margin-top: 100px; float: left;" />
+                    <div class="button-holder">
+                        <button type="button" onclick="closeResponse('Slash Response')">Close</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </center>
+
+        <center>
+            <nav id="nav">
+                <!-- <img onclick="openSide('side-panel')" class="side-more" src="./images/more.png" width="50px"> -->
+                <div navbut class="dropdown" data-dropdown>
+                    <button button-none class="link" data-dropdown-button>
+                        More <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" id="NavBar-Dropdown">
+                        <a href="./run-bot.html">
+                            <h1 class="dropdown-button">Run Bot</h1>
+                        </a>
+                        <a href="./choose-bot.html">
+                            <h1 class="dropdown-button">Choose Bot</h1>
+                        </a>
+                        <a href="./setup.html">
+                            <h1 class="dropdown-button">Setup</h1>
+                        </a>
+                        <a href="./index.html">
+                            <h1 class="dropdown-button">Home</h1>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                <a navbut onclick="saveEverything()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</a>
+                <a navbut id="headerBtn1" oncontextmenu="navbutClicked('InsertRawData')" onclick="navbutClicked('InsertRawData')"><i class="fa-solid fa-circle-plus"></i> Insert Raw Data</a>
+                <a navbut id="headerBtn2" oncontextmenu="navbutClicked('GetRawData')" onclick=" getRawData('#GetRawData');navbutClicked('GetRawData')"><i class="fa-solid fa-cubes"></i> Get Raw Data</a>
+                <a navbut id="headerBtn3" oncontextmenu="navbutClicked('spreadsheetDiv')" onclick="navbutClicked('spreadsheetDiv');  upadateFileList()"><i class="fa-solid fa-cubes"></i>Add File</a>
+            </nav>
+        </center>
+        <br /><br /><br /><br />
+
+        <div style="display: none;" class="raw-data" id="spreadsheetDiv">
+            <br />
+            <a style="display: block;" onclick="navbutClicked('createFileForm')" id="addFile"><i class="fa-solid fa-cubes"></i> Add File</a>
+            <div  style="display: none;opacity: 0;transition: ease-in 2s;margin-bottom: 1rem;" id="createFileForm"class="create">
+                <button onclick="getDir('createFile')" id="fileDirBtn" style="font-size: 20px;margin-top: 25px;margin-left: 3rem" button class="blue">
+                    <i class="fa-solid fa-folder"></i> Create File
+                </button>
+                <h2><span id="path" style="word-wrap: break-word;"></span></h2>
+                <br />
+
+            </div>
+            <div style="display: block; border-top: 3px solid white;width: 100%;margin: 10px 10px 10px 10px;border-radius: 15px;align-self: center;"></div>
+            <a style="display: block;" onclick="navbutClicked('manage')" id="addFile"><i class="fa-solid fa-cubes"></i> Manage File(s)</a>
+            <div  style="display: none;opacity: 0;transition: ease-in 2s;margin-bottom: 1rem;" id="manage"class="create">
+                <div id="fileList"></div>
+            </div>
+            </div>
+        </div>
+        <div style="display: none;" id="side-panel" class="side-panel"></div>
+
+        <div style="display: none;" class="raw-data" id="GetRawData">
+            <h1>Raw Data</h1>
+            <textarea readonly="readonly" style="width: 100%; resize: vertical;min-height: 4rem;" input-field></textarea>
+        </div>
+
+        <div style="display: none;" class="raw-data" id="InsertRawData">
+            <h1>Raw Data</h1>
+            <textarea style="width: 100%; resize: vertical;min-height: 4rem;" input-field placeholder="JSON Here"></textarea>
+            <button onclick="addJSONData(); this.parentElement.style.display = 'none'" btn>Add Data</button>
+        </div>
+
+        <svg id="connsvg">
+
+        </svg>
+            
+        </div>
+
+        <div style="display: none; position: absolute;" class="right-menu" id="right-context-menu" menu>
+            <div header>
+                <h2 style="margin-left: 25px">Menu</h2>
+            </div>
+            <h3 onclick="openCommands()" menu-btn><i class="fa-solid fa-command"></i> New Command</h3>
+            <h3 onclick="openSlashCommands()" menu-btn><i class="fa-solid fa-slash-forward"></i> New Slash Command</h3>
+            <h3 onclick="openEvents()" menu-btn><i class="fa-solid fa-flag-pennant"></i> New Event</h3>
+            <h3 onclick="openResponses()" menu-btn><i class="fa fa-commenting" aria-hidden="true"></i> New Response</h3>
+            <h3 onclick="openGroup()" menu-btn><i class="fa-solid fa-layer-group"></i> New Group</h3>
+            <h3 onclick="openNote()" menu-btn><i class="fa-solid fa-note"></i> New Note</h3>
+            <h3 onclick="pasteNode()" menu-btn><i class="fa-solid fa-paste"></i> Paste</h3>
+        </div>
+
+        <div style="display: none" class="right-menu" id="node-right-context-menu" menu-node>
+            <div header>
+                <h2 style="margin-left: 25px">Node Menu</h2>
+            </div>
+            <h3 onclick="copyNode()" menu-btn><i class="fa-solid fa-copy"></i> Copy</h3>
+            <h3 onclick="openEdit(false)" menu-btn><i class="fa-solid fa-pen-to-square"></i> Edit Node</h3>
+            <h3 onclick="deleteNode()" menu-btn style="color: rgb(255, 59, 59)"><i class="fa-solid fa-trash"></i> Delete</h3>
+        </div>
+
+        <div style="display: none" class="right-menu" menu-group>
+            <div header>
+                <h2 style="margin-left: 25px"><i class="fa-solid fa-layer-group"></i> Group Menu</h2>
+            </div>
+            <h3 onclick="openEdit(true)" menu-btn><i class="fa-solid fa-pen-to-square"></i> Edit Group</h3>
+            <h3 onclick="deleteGroup()" menu-btn style="color: rgb(255, 59, 59)"><i class="fa-solid fa-trash"></i> Delete</h3>
+        </div>
+    </body>
+</html>

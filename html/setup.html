@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Discord Bot Tool V2</title>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+
+		<script src="./js/dropdown.js" defer></script>
+
+		<script src="./js/setupBot.js" defer></script>
+
+		<script src="./js/rpc.js"></script>
+
+		<script>
+			changeRPC("Setting up the bot", "https://i.imgur.com/ZbeAYUQ.png");
+		</script>
+		<script src="./js/Errors.js" defer></script>
+		<script src="./js/pluginManager.js" defer></script>
+		<script src="./js/titleBar.js" defer></script>
+	</head>
+	<body>
+		<div class="title-bar">
+			<div class="titleDrag"></div>
+			<p style="margin-left: 15px">DBT v2.0.1</p>
+			<div>
+				<a minimize><i class="fa-solid fa-dash"></i>&nbsp;</a>
+				<a maximize><i class="fa-solid fa-window-maximize"></i>&nbsp;</a>
+				<a close><i class="fa-solid fa-xmark"></i>&nbsp;</a>
+			</div>
+		</div>
+
+		<div class="error-container"></div>
+
+		<template id="errorMsg">
+			<div class="error">
+				<p class="error-text"></p>
+			</div>
+		</template>
+
+		<template id="toastMsg">
+			<div class="toast">
+				<p class="toast-text"></p>
+			</div>
+		</template>
+		<style>
+			@keyframes spin1 {
+				0% {
+					transform: rotate(0);
+				}
+			}
+			@keyframes spin2 {
+				100% {
+					transform: rotate(360);
+				}
+			}
+		</style>
+		<center>
+			<nav>
+				<div navbut class="dropdown" data-dropdown>
+					<button button-none class="link" data-dropdown-button>More <i class="fa-solid fa-circle-ellipsis"></i></button>
+					<div class="dropdown-menu">
+						<a href="./run-bot.html">
+							<h1 class="dropdown-button">Run Bot</h1>
+						</a>
+						<a href="./commands.html">
+							<h1 class="dropdown-button">Commands</h1>
+						</a>
+						<a href="./choose-bot.html">
+							<h1 class="dropdown-button">Choose Bot</h1>
+						</a>
+						<a href="./setup.html">
+							<h1 class="dropdown-button">Setup</h1>
+						</a>
+						<a href="./index.html">
+							<h1 class="dropdown-button">Home</h1>
+						</a>
+					</div>
+				</div>
+			</nav>
+
+			<br /><br /><br /><br />
+
+			<div class="chooseBot">
+				<label label-field><i class="fa-solid fa-robot"></i> Setup a bot</label>
+				<h3>Set a selected bots prefix and a token</h3>
+				<hr class="chooseBot-hr" />
+
+				<h3><i class="fa-duotone fa-gears"></i> Bot Prefix</h3>
+				<input id="prefix" oninput="validate(this.id)" style="margin-top: 30px; margin-bottom: 70px" input-field />
+
+				<h3><i class="fa-solid fa-address-card"></i> Bot ID</h3>
+				<input id="bot_id" oninput="validate(this.id)" style="margin-top: 30px; margin-bottom: 70px" input-field />
+
+				<h3><i class="fa-solid fa-key"></i> Bot Token</h3>
+				<input id="token" oninput="validate(this.id)" type="password" style="margin-top: 30px" input-field />
+				<button onclick="showToken(this)" style="font-size: 20px; margin-bottom: 80px" button class="burple"><i class="fa-solid fa-eye-slash"></i> Show</button>
+
+				<hr class="chooseBot-hr" />
+
+				<button id="saveChanges" style="font-size: 20px; margin-bottom: 60px" button class="burple"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+			</div>
+		</center>
+	</body>
+</html>

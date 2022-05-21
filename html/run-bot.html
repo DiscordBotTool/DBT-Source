@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Discord Bot Tool V2</title>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+
+		<script src="./js/dropdown.js" defer></script>
+		<script src="./js/runbot.js" defer></script>
+		<script src="./js/Errors.js" defer></script>
+		<script src="./js/pluginManager.js" defer></script>
+		<script src="./js/titleBar.js" defer></script>
+	</head>
+	<body>
+		<div class="title-bar">
+			<div class="titleDrag"></div>
+			<p style="margin-left: 15px">DBT v2.0.1</p>
+			<div>
+				<a minimize><i class="fa-solid fa-dash"></i>&nbsp;</a>
+				<a maximize><i class="fa-solid fa-window-maximize"></i>&nbsp;</a>
+				<a close><i class="fa-solid fa-xmark"></i>&nbsp;</a>
+			</div>
+		</div>
+		<div class="error-container"></div>
+
+		<template id="errorMsg">
+			<div class="error">
+				<p class="error-text"></p>
+			</div>
+		</template>
+
+		<template id="toastMsg">
+			<div class="toast">
+				<p class="toast-text"></p>
+			</div>
+		</template>
+
+		<center>
+			<nav>
+				<div navbut class="dropdown" data-dropdown>
+					<button button-none class="link" data-dropdown-button>More <i class="fa-solid fa-circle-ellipsis"></i></button>
+					<div class="dropdown-menu">
+						<a href="./run-bot.html">
+							<h1 class="dropdown-button">Run Bot</h1>
+						</a>
+						<a href="./commands.html">
+							<h1 class="dropdown-button">Commands</h1>
+						</a>
+						<a href="./choose-bot.html">
+							<h1 class="dropdown-button">Choose Bot</h1>
+						</a>
+						<a href="./setup.html">
+							<h1 class="dropdown-button">Setup</h1>
+						</a>
+						<a href="./index.html">
+							<h1 class="dropdown-button">Home</h1>
+						</a>
+					</div>
+				</div>
+			</nav>
+
+			<br /><br /><br /><br />
+
+			<div class="runBot">
+				<label label-field><i class="fa-solid fa-robot"></i> Run <span class="display-bot-name">BOT_NAME</span></label>
+				<h3><span class="display-bot-name">BOT_NAME</span> is <span style="color: red" id="running">Not Running</span></h3>
+				<button onclick="runBot()" style="font-size: 21.5px; padding-right: 38px" button class="green"><i class="fa-solid fa-person-running"></i> Run</button>
+				<button onclick="stopBot()" style="font-size: 21.5px; padding-left: 32px" button class="red"><i class="fa-solid fa-circle-xmark"></i> Stop</button><br />
+				<button onclick="DBT.toast({ message: 'NOTE: This will stay up for 5 hours! you will be put to 1 hour cooldown afterwards!' }); hostBot()" style="font-size: 20px; margin-top: 3px" button class="blue">
+					<i class="fa-solid fa-server"></i>
+					Host
+				</button>
+				<button onclick="stopHosting()" style="font-size: 20px; margin-top: 3px" button class="red">
+					<i class="fa-solid fa-circle-xmark"></i>
+					Stop</button
+				><br />
+				<button onclick="resetLog()" style="font-size: 20px; margin-top: 3px; width: 17.25rem" button class="red"><i class="fa-thin fa-trash-arrow-up"></i>RESET LOG</button>
+
+				<div id="logger" class="logger"></div>
+			</div>
+		</center>
+	</body>
+</html>

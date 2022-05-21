@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Discord Bot Tool V2</title>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+
+		<script src="./js/dropdown.js" defer></script>
+		<script src="./js/rpc.js"></script>
+
+		<script>
+			changeRPC("At home page", "https://i.imgur.com/ZbeAYUQ.png");
+		</script>
+
+		<script src="./js/Errors.js" defer></script>
+		<script src="./js/pluginManager.js" defer></script>
+		<script src="./js/titleBar.js" defer></script>
+	</head>
+	<body>
+		<div class="title-bar">
+			<div class="titleDrag"></div>
+			<p style="margin-left: 15px">DBT v2.0.1</p>
+			<div>
+				<a minimize><i class="fa-solid fa-dash"></i>&nbsp;</a>
+				<a maximize><i class="fa-solid fa-window-maximize"></i>&nbsp;</a>
+				<a close><i class="fa-solid fa-xmark"></i>&nbsp;</a>
+			</div>
+		</div>
+		<div class="error-container"></div>
+
+		<template id="errorMsg">
+			<div class="error">
+				<p class="error-text"></p>
+			</div>
+		</template>
+
+		<template id="toastMsg">
+			<div class="toast">
+				<p class="toast-text"></p>
+			</div>
+		</template>
+
+		<center>
+			<nav>
+				<div navbut class="dropdown" data-dropdown>
+					<button button-none class="link" data-dropdown-button>More <i class="fa-solid fa-circle-ellipsis"></i></button>
+					<div class="dropdown-menu">
+						<a href="./run-bot.html">
+							<h1 class="dropdown-button">Run Bot</h1>
+						</a>
+						<a href="./commands.html">
+							<h1 class="dropdown-button">Commands</h1>
+						</a>
+						<a href="./choose-bot.html">
+							<h1 class="dropdown-button">Choose Bot</h1>
+						</a>
+						<a href="./setup.html">
+							<h1 class="dropdown-button">Setup</h1>
+						</a>
+						<a href="./index.html">
+							<h1 class="dropdown-button">Home</h1>
+						</a>
+					</div>
+				</div>
+			</nav>
+			<br /><br /><br /><br />
+
+			<div class="header">
+				<h2>DISCORD BOT TOOL <span class="version">v2.0.1</span></h2>
+			</div>
+
+			<div class="news">
+				<h2>What's New:</h2>
+				<ul>
+					<li>Code Block Node (by Pokemonultra #2815)</li>
+					<li>Reset Log Button (when running your bot)</li>
+					<li>Clicking on a button in commands (insert raw data for example) will enable / disable it.</li>
+					<br />
+
+					<label>Bug fixes:</label>
+					<li style="margin-left: 3%">Loading Setup Fields</li>
+					<li style="margin-left: 3%">Improved Hosting Nortifications</li>
+				</ul>
+				<!-- <ul style="margin-left: -5px">
+					<li>Groups! Organize your nodes with groups!</li>
+					<li>Command Aliases!</li>
+					<li>Split Text Node</li>
+					<li>Editing Nodes Name</li>
+					<li>Replace Text Node</li>
+				</ul> -->
+			</div>
+
+			<div style="margin-left: 0" class="details-box">
+				<h2>Join our Discord Server</h2>
+				<h4>If you need or just want to hang out, join our discord server!</h4>
+				<button onclick="require('electron').shell.openExternal('https://discord.gg/3epkDryktE')" style="margin-top: 90px" button class="burple"><i class="fa-brands fa-discord"></i> JOIN</button>
+			</div>
+			<div class="details-box">
+				<h2>Official Documentations</h2>
+				<h4>If you are stuck you can read our official documentations!</h4>
+
+				<button onclick="require('electron').shell.openExternal('https://docs.discordbottool.xyz')" style="margin-top: 90px" button class="burple"><i class="fa-duotone fa-book"></i> READ</button>
+			</div>
+			<div class="details-box">
+				<h2>Mods</h2>
+				<h4>Download mods for more features!</h4>
+				<button onclick="require('electron').shell.openExternal('https://github.com/DiscordBotTool/Mods')" style="margin-top: 115px; font-size: 18px" button class="burple"><i class="fa-brands fa-github"></i> DOWNLOAD MODS</button>
+			</div>
+		</center>
+	</body>
+</html>

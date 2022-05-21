@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Discord Bot Tool V2</title>
+		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+
+		<script src="./js/dropdown.js" defer></script>
+
+		<script src="./js/chooseBot.js" defer></script>
+
+		<script src="./js/rpc.js"></script>
+
+		<script>
+			changeRPC("Choosing a bot", "https://i.imgur.com/ZbeAYUQ.png");
+		</script>
+		<script src="./js/Errors.js" defer></script>
+		<script src="./js/pluginManager.js" defer></script>
+
+		<script src="./js/titleBar.js" defer></script>
+	</head>
+	<body>
+		<div class="title-bar">
+			<div class="titleDrag"></div>
+			<p style="margin-left: 15px">DBT v2.0.1</p>
+			<div>
+				<a minimize><i class="fa-solid fa-dash"></i>&nbsp;</a>
+				<a maximize><i class="fa-solid fa-window-maximize"></i>&nbsp;</a>
+				<a close><i class="fa-solid fa-xmark"></i>&nbsp;</a>
+			</div>
+		</div>
+		<div class="error-container"></div>
+
+		<template id="errorMsg">
+			<div class="error">
+				<p class="error-text"></p>
+			</div>
+		</template>
+
+		<template id="toastMsg">
+			<div class="toast">
+				<p class="toast-text"></p>
+			</div>
+		</template>
+
+		<center>
+			<nav>
+				<div navbut class="dropdown" data-dropdown>
+					<button button-none class="link" data-dropdown-button>More <i class="fa-solid fa-circle-ellipsis"></i></button>
+					<div class="dropdown-menu">
+						<a href="./run-bot.html">
+							<h1 class="dropdown-button">Run Bot</h1>
+						</a>
+						<a href="./commands.html">
+							<h1 class="dropdown-button">Commands</h1>
+						</a>
+						<a href="./choose-bot.html">
+							<h1 class="dropdown-button">Choose Bot</h1>
+						</a>
+						<a href="./setup.html">
+							<h1 class="dropdown-button">Setup</h1>
+						</a>
+						<a href="./index.html">
+							<h1 class="dropdown-button">Home</h1>
+						</a>
+					</div>
+				</div>
+			</nav>
+
+			<br /><br /><br /><br />
+
+			<div class="chooseBot">
+				<label label-field><i class="fa-solid fa-robot"></i> Choose a Bot</label>
+				<h3>Choose a bot to edit</h3>
+				<select id="bots" style="margin-top: 30px" input-field>
+					<option disabled selected>-- select a bot --</option>
+				</select>
+				<button onclick="deleteBot()" style="font-size: 20px; margin-bottom: 100px" button class="red"><i class="fa-solid fa-trash"></i> Delete Bot</button>
+
+				<hr class="chooseBot-hr" />
+				<label label-field><i class="fa-solid fa-screwdriver-wrench"></i> Create a Bot</label>
+				<h3>Choose a folder to create a bot in</h3>
+				<button onclick="chooseDir()" style="font-size: 20px" button class="blue"><i class="fa-solid fa-folder"></i> Choose Folder</button>
+				<h3 id="folder-path" style="display: none">
+					<span id="path" style="color: rgb(121, 123, 255)">Path:</span>
+					<span id="folderPath"></span>
+				</h3>
+				<h3 style="margin-bottom: 60px"></h3>
+
+				<label label-field>Bot's Name</label>
+				<input style="margin-top: 30px" id="bot-name" input-field />
+
+				<h3 id="folder-path" style="display: none">
+					<span id="path" style="color: rgb(121, 123, 255)">Bot Name:</span>
+					<span id="folderPath" style="padding: 5px 10px 5px 10px; margin-left: 5px; border-radius: 5px"></span>
+				</h3>
+				<h3 style="margin-bottom: 60px"></h3>
+
+				<button id="createBot" onclick="createBot()" style="font-size: 20px; margin-bottom: 60px" button class="green"><i class="fa-solid fa-circle-plus"></i> Create Bot</button>
+			</div>
+		</center>
+	</body>
+</html>
