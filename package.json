@@ -41,12 +41,12 @@
 			"buildResources": "build"
 		},
 		"win": {
-			"asar": true,
+			"asar": false,
 			"target": "nsis",
 			"icon": "build/512x512.png"
 		},
 		"linux": {
-			"asar": true,
+			"asar": false,
 			"executableName": "Discord Bot Tool V2",
 			"icon": "build/icon_256.png",
 			"target": [
